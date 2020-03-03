@@ -1,0 +1,31 @@
+{
+	"name": "josefglatz/visualize-locked-backend",
+	"type": "typo3-cms-extension",
+	"description": "Visualize a locked TYPO3 backend for logged in backend editors. For example as part for your deployment process.",
+	"license": "GPL-2.0-only",
+	"authors": [
+		{
+			"name": "Josef Glatz",
+			"email": "josefglatz@gmail.com",
+			"role": "Developer",
+			"homepage": "https://jousch.com"
+		}
+	],
+	"require": {
+		"typo3/cms-core": "^9.5 || ^10",
+		"symfony/yaml": "2.6 - 4.99 || ^5"
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "visualize_locked_backend"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"JosefGlatz\\VisualizeLockedBackend\\": "Classes/"
+		}
+	},
+	"replace": {
+		"typo3-ter/visualize-locked-backend": "self.version"
+	}
+}
