@@ -7,6 +7,7 @@ use JosefGlatz\VisualizeLockedBackend\Utility\CheckLocks;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Exception\BackendLockedException;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Http\Response;
@@ -74,6 +75,8 @@ class CheckController
         }
         $this->lockResponse['checkLockedSurfDeployment'] = $result;
 
+        $this->getBackendUserStatus();
+
         return (new JsonResponse())->setPayload($this->getLockResponse());
     }
 
@@ -83,5 +86,14 @@ class CheckController
     public function getLockResponse(): array
     {
         return $this->lockResponse;
+    }
+
+    private function getBackendUserStatus(): void
+    {
+        $result = [];
+        $context = GeneralUtility::makeInstance(Context::class);
+        $result['isLoggedIn'] = $context->getPropertyFromAspect('backend.user', 'isLoggedIn');
+        $result['isAdmin'] = $context->getPropertyFromAspect('backend.user', 'isAdmin');
+        $this->lockResponse['backendUser'] = $result;
     }
 }
